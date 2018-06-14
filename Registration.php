@@ -1,8 +1,6 @@
 <?php
-	$login = htmlspecialchars($_POST['login']);
-	echo "$login";
-	
-	/*ini_set('display_errors',1);
+/*
+	ini_set('display_errors',1);
 	error_reporting('E_ALL');
 	
 	//SETTINGS//
@@ -14,10 +12,9 @@
 	$mess = 'Для того что-бы продолжить регистрацию, перейдите по ссылке:';
 	$mess1 = 'Если эту регистрацию, делали не ВЫ. Удалите письмо.';
 	//SETTINGS//
-	
+*/	
 	include_once('db.php');
-	
-	window.alert('Начинаем передачу!')
+
 	
 	$login = htmlspecialchars($_POST['login']);
 	$password = $_POST['password'];
@@ -25,9 +22,9 @@
 	//$salt = mt_rand(100, 999);
 	$tm = time();
 	$password = md5($password);
-	
-	if (mysql_query("INSERT INTO users (login,password,mail,last_act,reg_date) VALUES ('".$login."','".$password."','".$mail."','".$tm."','".$tm."')")) //пишем данные в БД и авторизовываем пользователя
+	$status = false;
+	if($sql = $mysqli->query("INSERT INTO `user` (`login`, `password`, `mail`, `status`, `last_act`, `reg_date`) VALUES ($login, $password, $mail, 'false', $tm, $tm)"))
 	{
 		include ("login-done.php");
-	}*/
+	}
 ?>
