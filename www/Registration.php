@@ -16,14 +16,25 @@
 	include_once('db.php');
 
 	$login = htmlspecialchars($_POST['login']);
-	$password = $_POST['password'];
+	$password = htmlspecialchars($_POST['password']);
 	$mail = htmlspecialchars($_POST['mail']);
 	//$salt = mt_rand(100, 999);
 	$tm = time();
 	$password = md5($password);
-	$status = false;
-	if($sql = $mysqli->query("INSERT INTO `user` (`login`, `password`, `mail`, `status`, `last_act`, `reg_date`) VALUES ($login, $password, $mail, 'false', $tm, $tm)"))
-	{
-		include ("login-done.php");
+	$querylogin=$mysqli->query("SELECT * FROM `user` WHERE username='$login'");
+	$numrowlogin = $querylogin->num_rows;
+	if ($numrowlogin==0){
+		if($mysqli->query("INSERT INTO `user` (`login`, `password`, `mail`, `status`, `last_act`, `reg_date`) VALUES ('$login', '$password', '$mail', 'false', $tm, $tm)")){
+			include ("login-done.php");
+		}
+		else {
+			$message = "Failed to insert data information!";
+			echo ($message);
+		}
 	}
+	else {
+		$message = "That username already exists! Please try another one!";
+		echo ($message);
+	}
+	
 ?>
