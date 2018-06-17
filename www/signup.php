@@ -59,7 +59,6 @@
 				window.alert('Вы не согласились с условиями!')
 				return false				
 			}
-			window.alert('Пароли совпадают! Условия приняты!')
 			return true
 			}
 			
